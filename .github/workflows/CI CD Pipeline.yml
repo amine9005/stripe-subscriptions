@@ -15,30 +15,29 @@ jobs:
       matrix:
         node-version: [18.x, 20.x, 22.x]
 
-      steps:
-        - name: Checkout Repo
-        - uses: actions/checkout@v5
+    steps:
+      - uses: actions/checkout@v5
 
-        - name: Use Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v5
-          with:
-            node-version: ${{ matrix.node-version }}
-            cache: "yarn"
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
 
-        - name: Install Dependencies
-          run: yarn install
+      - name: Install Dependencies
+        run: yarn install
 
-        - name: Run ESLint
-          run: yarn lint
+      - name: Run ESLint
+        run: yarn lint
 
-        - name: Run Prettier
-          run: yarn prettier . --check
+      - name: Run Prettier
+        run: yarn prettier . --check
 
-        - name: Archive Production Artifact
-          uses: actions/upload-artifact@v5
-          with:
-            name: build
-            path: dist/
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: build
+          path: dist/
 
   # deploy:
   #   name: Deploy To Renderer
